@@ -43,5 +43,23 @@ public class PlatformerConroller : MonoBehaviour {
         {
             myRigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
         }
+
+        //sets the platform as a parent of the player, when colliding
+	    MovingPlatform platform = null;
+        if (hit != null)
+	    {
+	        platform = hit.GetComponent<MovingPlatform>();
+	    }
+        if (platform != null)
+	    {
+	        transform.parent = platform.transform;
+	    }
+        else
+        {
+            transform.parent = null;
+        }
+ 
+        //add: counterscaling for the player
+
 	}
 }

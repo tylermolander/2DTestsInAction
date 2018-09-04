@@ -1,31 +1,38 @@
-﻿using UnityEngine;
-using System.Collections;
-public class MovingPlatform : MonoBehaviour 
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class MovingPlatform : MonoBehaviour
 {
+
     public Vector3 finishPos = Vector3.zero;
     public float speed = 0.5f;
+
     private Vector3 _startPos;
-    private float _trackPercent = 0;
+    private float _trackPercent = 0;  //how far between start and finish
     private int _direction = 1;
 
-    void Start() 
-    {
-        _startPos = transform.position;
-    }
 
-    void Update() 
+	void Start () 
+	{
+		_startPos = transform.position;
+	}
+
+    void Update()
     {
         _trackPercent += _direction * speed * Time.deltaTime;
         float x = (finishPos.x - _startPos.x) * _trackPercent + _startPos.x;
         float y = (finishPos.y - _startPos.y) * _trackPercent + _startPos.y;
         transform.position = new Vector3(x, y, _startPos.z);
-        if ((_direction == 1 && _trackPercent > .9f) ||
-            (_direction == -1 && _trackPercent < .1f)) {
+
+        if ((_direction == 1 && _trackPercent > .9f) || 
+            (_direction == -1 && _trackPercent < .1f))
+        {
             _direction *= -1;
         }
     }
-    
-    void OnDrawGizmos() 
+
+    void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position, finishPos);
